@@ -237,8 +237,8 @@ struct ArrivalAnnouncementCard: View {
 			Text("板南線").font(.subheadline.bold())
 			AnnouncementButton(
 				title: "台北車站",
-				zh: "台北車站，轉乘板南線、台鐵、高鐵、桃園機場捷運，請在本站換車。",
-				en: "Taipei Main Station, transfer station for the Blue Line, Taiwan Railways, Taiwan High Speed Rail, and Taoyuan Airport MRT.",
+				zh: "台北車站，轉乘淡水信義線、台鐵、高鐵、桃園機場捷運，請在本站換車。",
+				en: "Taipei Main Station, transfer station for the Red Line, Taiwan Railways, Taiwan High Speed Rail, and Taoyuan Airport MRT.",
 				tint: MRTLine.blue.color
 			)
 
@@ -256,7 +256,7 @@ struct ArrivalAnnouncementCard: View {
 			Divider().padding(.vertical, 2)
 
 			// 中和新蘆線（橘）
-			Text("中和新蘆線（往迴龍）").font(.subheadline.bold())
+			Text("中和新蘆線 (往迴龍列車)").font(.subheadline.bold())
 			AnnouncementButton(
 				title: "大橋頭",
 				zh: "大橋頭，往蘆洲方向的旅客，請在本站換車",
@@ -334,55 +334,88 @@ struct ContentView: View {
 				.ignoresSafeArea()
 
 				TabView(selection: $selectedIndex) {
-					VStack(alignment: .leading, spacing: 10) {
-						Text("到站廣播")
-							.font(.headline.weight(.semibold))
-							.padding(.horizontal, 12)
-							.padding(.vertical, 6)
-							.glassEffect(.regular.interactive())
-							.clipShape(Capsule())
-							.offset(x:18)
 
-						ArrivalAnnouncementCard()
+					// 到站廣播
+					ZStack {
+						Image("bg").resizable().scaledToFill().ignoresSafeArea()
+						LinearGradient(colors: [.black.opacity(0.25), .clear, .black.opacity(0.15)],
+									   startPoint: .top, endPoint: .bottom)
+							.ignoresSafeArea()
+
+						VStack(alignment: .leading, spacing: 10) {
+							Text("到站廣播")
+								.font(.title3.bold())
+								.padding(.horizontal, 12).padding(.vertical, 6)
+								.glassEffect(.regular.interactive())
+								.clipShape(Capsule())
+								.offset(x:310)
+
+							// 卡片
+							HStack { Spacer(); ArrivalAnnouncementCard(); Spacer() }
+						}
+						.padding(.horizontal, 16)
 					}
 					.tag(0)
-					
-					VStack(alignment: .leading, spacing: 10) {
-						Text("車廂宣導廣播")
-							.font(.headline.weight(.semibold))
-							.padding(.horizontal, 12)
-							.padding(.vertical, 6)
-							.glassEffect(.regular.interactive())
-							.clipShape(Capsule())
-							.offset(x:18)
+					.tabItem {
+						Label("到站廣播", systemImage: "tram.fill")
+					}
 
-						InCarAnnouncementCard()
+					// 車廂宣導廣播
+					ZStack {
+						Image("bg").resizable().scaledToFill().ignoresSafeArea()
+						LinearGradient(colors: [.black.opacity(0.25), .clear, .black.opacity(0.15)],
+									   startPoint: .top, endPoint: .bottom)
+							.ignoresSafeArea()
+
+						VStack(alignment: .leading, spacing: 10) {
+							Text("車廂宣導廣播")
+								.font(.title3.bold())
+								.padding(.horizontal, 12).padding(.vertical, 6)
+								.glassEffect(.regular.interactive())
+								.clipShape(Capsule())
+								.offset(x:310)
+
+							HStack { Spacer(); InCarAnnouncementCard(); Spacer() }
+						}
+						.padding(.horizontal, 16)
 					}
 					.tag(1)
-					
-					VStack(alignment: .leading, spacing: 10) {
-						Text("車站廣播")
-							.font(.headline.weight(.semibold))
-							.padding(.horizontal, 12)
-							.padding(.vertical, 6)
-							.glassEffect(.regular.interactive())
-							.clipShape(Capsule())
-							.offset(x:18)
+					.tabItem {
+						Label("車廂宣導", systemImage: "figure.wave")
+					}
 
-						StationAnnouncementCard()
+					// 車站廣播
+					ZStack {
+						Image("bg").resizable().scaledToFill().ignoresSafeArea()
+						LinearGradient(colors: [.black.opacity(0.25), .clear, .black.opacity(0.15)],
+									   startPoint: .top, endPoint: .bottom)
+							.ignoresSafeArea()
+
+						VStack(alignment: .leading, spacing: 10) {
+							Text("車站廣播")
+								.font(.title3.bold())
+								.padding(.horizontal, 12).padding(.vertical, 6)
+								.glassEffect(.regular.interactive())
+								.clipShape(Capsule())
+								.offset(x:310)
+
+							HStack { Spacer(); StationAnnouncementCard(); Spacer() }
+						}
+						.padding(.horizontal, 16)
 					}
 					.tag(2)
-
-
+					.tabItem {
+						Label("車站廣播", systemImage: "building.columns.fill")
+					}
 				}
-				.tabViewStyle(.page(indexDisplayMode: .always))
-				.frame(height: 400)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
 				
 				Button("停止播放") {
 						SpeechManager.shared.synth.stopSpeaking(at: .word)
 					}
+					.font(.headline).bold()
 					.buttonStyle(.glassProminent)
-					.offset(y:300)
+					.offset(y:180)
 			}
 		}
 	}
