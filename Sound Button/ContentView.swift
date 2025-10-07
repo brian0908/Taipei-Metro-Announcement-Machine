@@ -123,9 +123,9 @@ struct AnnouncementCard<Content: View>: View {
 				.padding(12)
 			}
 		}
-		.frame(height: cardHeight)         // 固定卡片高度
-		.frame(maxWidth: 300)              // ✅ 限制卡片最大寬度，避免太寬
-		.clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous)) // ✅ 先裁成圓角
+		.frame(height: cardHeight)
+		.frame(maxWidth: 300)
+		.clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
 		.glassEffect(.clear.interactive(), in: .rect(cornerRadius: 22))
 		.padding(.horizontal, 16)
 	}
@@ -421,8 +421,8 @@ struct ContentView: View {
 	}
 }
 
-#Preview{
-	ContentView()
-}
+//#Preview{
+//	ContentView()
+//}
 
 
